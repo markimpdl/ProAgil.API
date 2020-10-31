@@ -16,7 +16,7 @@ namespace ProAgil.API.Controllers
         public ActionResult<IEnumerable<Evento>> Get()
         {
             return new Evento[] { 
-                new Evento(){
+                new Evento() {
                     EventoId = 1,
                     Tema = "Angular e .Net Core",
                     Local = "Belo Horizonte",
@@ -24,23 +24,40 @@ namespace ProAgil.API.Controllers
                     QtdPessoas = 250,
                     DataEvento = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy")
                 },
-                new Evento(){
+                new Evento() {
                     EventoId = 2,
                     Tema = "Angular e suas Novidades",
                     Local = "São Paulo",
                     Lote = "3º Lote",
                     QtdPessoas = 350,
                     DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
-                },
+                }
 
              };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Evento> Get(int id)
         {
-            return "value";
+            return new Evento[] {
+                new Evento() {
+                    EventoId = 1,
+                    Tema = "Angular e .Net Core",
+                    Local = "Belo Horizonte",
+                    Lote = "1º Lote",
+                    QtdPessoas = 250,
+                    DataEvento = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy")
+                },
+                new Evento() {
+                    EventoId = 2,
+                    Tema = "Angular e suas Novidades",
+                    Local = "São Paulo",
+                    Lote = "3º Lote",
+                    QtdPessoas = 350,
+                    DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
+                }
+            }.FirstOrDefault(x => x.EventoId == id);
         }
 
         // POST api/values
