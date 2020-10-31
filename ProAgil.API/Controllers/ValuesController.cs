@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProAgil.API.Data;
 using ProAgil.API.Model;
@@ -19,6 +20,24 @@ namespace ProAgil.API.Controllers
         }
         // GET api/values
         [HttpGet]
+
+
+        public IActionResult Get()
+        {
+            try
+            {
+                var results = _context.Eventos.ToList();
+                return Ok(results);
+            }
+            catch (System.Exception)
+            {
+               return this.StatusCode(StatusCodes.Status500InternalServerError,"Banco de dados Falhou");
+            }
+        }
+
+
+        /* Request usando Action Result substituido por IAction Result
+        
         public ActionResult<IEnumerable<Evento>> Get()
         {
             return _context.Eventos.ToList();
@@ -45,7 +64,7 @@ namespace ProAgil.API.Controllers
              }; */
 
 
-        }
+        } */
 
         // GET api/values/5
         [HttpGet("{id}")]
