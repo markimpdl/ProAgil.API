@@ -16,6 +16,7 @@ import { EventosComponent } from './eventos/eventos.component';
 import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
 
 import { EventoService } from './_services/evento.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EventoService } from './_services/evento.service';
   imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     BrowserAnimationsModule,
