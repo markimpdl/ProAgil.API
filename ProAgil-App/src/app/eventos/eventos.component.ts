@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { EventoService } from '../_services/evento.service';
 import { Evento } from '../_models/Evento';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
-  styleUrls: ['./eventos.component.css']
+  styleUrls: ['./eventos.component.css'],
 })
 export class EventosComponent implements OnInit {
   eventosFiltrados: Evento[];
@@ -13,31 +14,40 @@ export class EventosComponent implements OnInit {
   imagemLargura = 50;
   imagemMargem = 2;
   mostrarImagem = false;
+  modalRef: BsModalRef;
   _filtroLista = '';
 
-  get filtroLista(): string{
+  constructor(
+    private eventoService: EventoService,
+    private modalService: BsModalService
+  ) {}
+
+  get filtroLista(): string {
     return this._filtroLista;
   }
-  set filtroLista(value: string){
+  set filtroLista(value: string) {
     this._filtroLista = value;
-    this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
+    this.eventosFiltrados = this.filtroLista
+      ? this.filtrarEventos(this.filtroLista)
+      : this.eventos;
   }
 
-  constructor(
-    private eventoService: EventoService) { }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
-  ngOnInit(): any{
+  ngOnInit(): any {
     this.getEventos();
   }
 
   filtrarEventos(filtrarPor: string): any {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.eventos.filter(
-      evento => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+      (evento) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     );
   }
 
-  alternarImagem(): any{
+  alternarImagem(): any {
     this.mostrarImagem = !this.mostrarImagem;
   }
 
@@ -47,9 +57,10 @@ export class EventosComponent implements OnInit {
         this.eventos = _eventos;
         this.eventosFiltrados = this.eventos;
         console.log(_eventos);
-      }, error => {
+      },
+      (error) => {
         console.log(error);
-      });
+      }
+    );
   }
-
 }
