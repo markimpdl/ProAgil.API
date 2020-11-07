@@ -9,6 +9,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ToastrService } from 'ngx-toastr';
 
+
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
