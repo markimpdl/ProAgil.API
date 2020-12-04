@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
+
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,35 +26,56 @@ import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { ContatosComponent } from './contatos/contatos.component';
 import { TituloComponent } from './_shared/titulo/titulo.component';
 
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { NgxCurrencyModule } from 'ngx-currency';
+import { NgxMaskModule } from 'ngx-mask';
+import { EventoEditComponent } from './eventos/eventoEdit/eventoEdit.component';
+
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
-    EventosComponent,
     NavComponent,
-    DateTimeFormatPipePipe,
-    DashboardComponent,
+    EventosComponent,
+    EventoEditComponent,
     PalestrantesComponent,
-    TituloComponent,
+    DashboardComponent,
     ContatosComponent,
-  ],
+    TituloComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent,
+    DateTimeFormatPipePipe
+   ],
   imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    TabsModule.forRoot(),
+    NgxMaskModule.forRoot(),
+    NgxCurrencyModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
-      preventDuplicates: true,
-      progressBar: true,
+        timeOut: 3000,
+        preventDuplicates: true,
+        progressBar: true
     }),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
-  providers: [EventoService],
+  providers: [EventoService,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: AuthInterceptor,
+         multi: true
+      }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
